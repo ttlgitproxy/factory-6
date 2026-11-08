@@ -1,0 +1,238 @@
+{
+  "static_patterns": [
+    {
+      "match": "/Users/[^ \"\\\\]*",
+      "replace": "<path>",
+      "comment": "Absolute macOS home-directory paths"
+    },
+    {
+      "match": "/private/var/[^ \"\\\\]*",
+      "replace": "<path>",
+      "comment": "Private temporary filesystem paths"
+    },
+    {
+      "match": "/var/folders/[^ \"\\\\]*",
+      "replace": "<path>",
+      "comment": "Runner cache and temp folder paths"
+    },
+    {
+      "match": "(^|[^/[:alnum:]])source/[^ \"\\\\]*",
+      "replace": "\\1<path>",
+      "comment": "Relative source checkout paths (any non-path/non-word delimiter)"
+    },
+    {
+      "match": "[^ \":]*/source/[^ \"\\\\]*",
+      "replace": "<path>",
+      "comment": "Absolute source checkout paths"
+    },
+    {
+      "match": "~/[^ \"\\\\]*",
+      "replace": "<path>",
+      "comment": "Tilde-based home-directory paths"
+    },
+    {
+      "match": "/Applications/Xcode[^ \"\\\\]*",
+      "replace": "<xcode>",
+      "comment": "Xcode installation paths"
+    },
+    {
+      "match": "/Users/[^ \"\\\\]*/Library/Keychains/[^ \"\\\\]*",
+      "replace": "<keychain-path>",
+      "comment": "Keychain file paths"
+    },
+    {
+      "match": "[^ \"\\\\]*\\.keychain-db",
+      "replace": "<keychain-path>",
+      "comment": "Keychain database filenames"
+    },
+    {
+      "match": "[^ \"\\\\]*\\.mobileprovision([[:space:]]|$)",
+      "replace": "<profile-path>\\1",
+      "comment": "Provisioning profile file paths"
+    },
+    {
+      "match": "[^ \"\\\\]*\\.p12([[:space:]]|$)",
+      "replace": "<certificate-path>\\1",
+      "comment": "Certificate bundle file paths"
+    },
+    {
+      "match": "(RUNNER_(TEMP|WORKSPACE|TOOL_CACHE)|TMPDIR|HOME)=[^[:space:]]+",
+      "replace": "\\1=<path>",
+      "comment": "Runner-specific path environment variables"
+    },
+    {
+      "match": "[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}",
+      "replace": "<uuid>",
+      "comment": "UUIDs from profiles, devices, or build metadata"
+    },
+    {
+      "match": "(Apple|iPhone) (Development|Distribution): [^\"]*\\)",
+      "replace": "\\1 \\2: <redacted>)",
+      "comment": "Signing identities with parenthesized team names"
+    },
+    {
+      "match": "(Apple|iPhone) (Development|Distribution): [^\" )]+",
+      "replace": "\\1 \\2: <redacted>",
+      "comment": "Signing identities without embedded spaces"
+    },
+    {
+      "match": "(Apple|iPhone) (Development|Distribution):.*",
+      "replace": "\\1 \\2: <redacted>",
+      "comment": "Signing identities with unexpected suffixes"
+    },
+    {
+      "match": "signingCertificate *= *\"[^\"]*\"",
+      "replace": "signingCertificate=<redacted>",
+      "comment": "Quoted signingCertificate assignments"
+    },
+    {
+      "match": "signingCertificate *= *[^;)]*",
+      "replace": "signingCertificate=<redacted>",
+      "comment": "Unquoted signingCertificate assignments"
+    },
+    {
+      "match": "CODE_SIGN_IDENTITY *= *\"[^\"]*\"",
+      "replace": "CODE_SIGN_IDENTITY=<redacted>",
+      "comment": "Quoted code-sign identity settings"
+    },
+    {
+      "match": "CODE_SIGN_IDENTITY *= *[^\")]*",
+      "replace": "CODE_SIGN_IDENTITY=<redacted>",
+      "comment": "Unquoted code-sign identity settings, including multi-word values"
+    },
+    {
+      "match": "EXPANDED_CODE_SIGN_IDENTITY *= *[^ \" )]*",
+      "replace": "EXPANDED_CODE_SIGN_IDENTITY=<redacted>",
+      "comment": "Expanded code-sign identity hashes"
+    },
+    {
+      "match": "PRODUCT_BUNDLE_IDENTIFIER *= *[^ \" )]*",
+      "replace": "PRODUCT_BUNDLE_IDENTIFIER=<redacted>",
+      "comment": "Bundle identifier build settings"
+    },
+    {
+      "match": "PROVISIONING_PROFILE_SPECIFIER *= *\"[^\"]*\"",
+      "replace": "PROVISIONING_PROFILE_SPECIFIER=<redacted>",
+      "comment": "Quoted provisioning profile specifiers"
+    },
+    {
+      "match": "PROVISIONING_PROFILE_SPECIFIER *= *[^\")]*",
+      "replace": "PROVISIONING_PROFILE_SPECIFIER=<redacted>",
+      "comment": "Unquoted provisioning profile specifiers, including multi-word values"
+    },
+    {
+      "match": "PROVISIONING_PROFILE[^ =]* *= *\"[^\"]*\"",
+      "replace": "PROVISIONING_PROFILE=<redacted>",
+      "comment": "Quoted provisioning profile assignments"
+    },
+    {
+      "match": "PROVISIONING_PROFILE[^ =]* *= *[^\")]*",
+      "replace": "PROVISIONING_PROFILE=<redacted>",
+      "comment": "Unquoted provisioning profile assignments, including multi-word values"
+    },
+    {
+      "match": "DEVELOPMENT_TEAM *= *[^ \" )]*",
+      "replace": "DEVELOPMENT_TEAM=<redacted>",
+      "comment": "Apple developer team identifiers"
+    },
+    {
+      "match": "(KEYCHAIN_PATH|MATCH_KEYCHAIN_NAME|CERTIFICATE_PATH|PROFILE_PATH) *= *[^[:space:]]+",
+      "replace": "\\1=<redacted>",
+      "comment": "Keychain, certificate, and profile path assignments"
+    },
+    {
+      "match": "([A-Z0-9_]*_SIGNING_[A-Z0-9_]*) *= *\"[^\"]*\"",
+      "replace": "\\1=<redacted>",
+      "comment": "Quoted build settings containing _SIGNING_"
+    },
+    {
+      "match": "([A-Z0-9_]*_SIGNING_[A-Z0-9_]*) *= *[^\")]*",
+      "replace": "\\1=<redacted>",
+      "comment": "Unquoted build settings containing _SIGNING_, including multi-word values"
+    },
+    {
+      "match": "([A-Z0-9_]*_SIGN_[A-Z0-9_]*) *= *\"[^\"]*\"",
+      "replace": "\\1=<redacted>",
+      "comment": "Quoted build settings containing _SIGN_"
+    },
+    {
+      "match": "([A-Z0-9_]*_SIGN_[A-Z0-9_]*) *= *[^\")]*",
+      "replace": "\\1=<redacted>",
+      "comment": "Unquoted build settings containing _SIGN_, including multi-word values"
+    },
+    {
+      "match": "(INFOPLIST_KEY_[A-Z0-9_]+) *= *\"[^\"]*\"",
+      "replace": "\\1=<redacted>",
+      "comment": "Quoted Info.plist-derived build settings"
+    },
+    {
+      "match": "(INFOPLIST_KEY_[A-Z0-9_]+) *= *[^\")]*",
+      "replace": "\\1=<redacted>",
+      "comment": "Unquoted Info.plist-derived build settings, including multi-word values"
+    },
+    {
+      "match": "MARKETING_VERSION *= *[^ \" )]*",
+      "replace": "MARKETING_VERSION=<redacted>",
+      "comment": "Marketing version values"
+    },
+    {
+      "match": "CURRENT_PROJECT_VERSION *= *[^ \" )]*",
+      "replace": "CURRENT_PROJECT_VERSION=<redacted>",
+      "comment": "Build number values"
+    },
+    {
+      "match": "([0-9]{1,3}\\.){3}[0-9]{1,3}",
+      "replace": "<ip-address>",
+      "comment": "IPv4 addresses"
+    },
+    {
+      "match": "https?://[^/@[:space:]]+:[^/@[:space:]]+@[^[:space:]\")]+",
+      "replace": "<credentialed-url>",
+      "comment": "Git or API URLs containing embedded credentials"
+    },
+    {
+      "match": "[[:alnum:]._%+-]+@[[:alnum:].-]+\\.[[:alpha:]]{2,}",
+      "replace": "<email>",
+      "comment": "Email addresses (after credentialed URLs to avoid partial redaction)"
+    },
+    {
+      "match": "(Authorization: *(Bearer|Basic) )[A-Za-z0-9._~+/=-]+",
+      "replace": "\\1<redacted>",
+      "comment": "Authorization headers"
+    },
+    {
+      "match": "((X-API-Key|X-Auth-Token|PRIVATE-TOKEN): *)[A-Za-z0-9._~+/=-]+",
+      "replace": "\\1<redacted>",
+      "comment": "API-key style headers"
+    },
+    {
+      "match": "([?&](token|key|api[_-]?key|access[_-]?token|auth|signature|sig|client_secret|password)=)[^&#[:space:]]+",
+      "replace": "\\1<redacted>",
+      "comment": "Sensitive query-string parameters"
+    },
+    {
+      "match": "([A-Z0-9_]*(TOKEN|SECRET|PASSWORD|API_KEY|AUTH)[A-Z0-9_]*) *= *[^[:space:]]+",
+      "replace": "\\1=<redacted>",
+      "comment": "Secret-looking environment assignments"
+    },
+    {
+      "match": "[A-Za-z0-9+/]{40,}={0,2}",
+      "replace": "<base64>",
+      "comment": "Long base64-encoded blobs"
+    }
+  ],
+  "dynamic_env_vars": [
+    "SCHEME_NAME",
+    "BUNDLE_ID",
+    "TEAM_ID",
+    "PROFILE_NAME",
+    "ASC_KEY_ID",
+    "ASC_ISSUER_ID"
+  ],
+  "post_processing": {
+    "backtick_to_quote": true,
+    "max_lines": 60,
+    "max_bytes": 4096,
+    "eof_guard": true
+  }
+}

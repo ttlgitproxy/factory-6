@@ -1,0 +1,2 @@
+# Sanitize patterns are security-critical — require owner review
+/.github/sanitize-patterns.json @ttlgitproxy
